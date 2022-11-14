@@ -21,6 +21,8 @@ returns all stored interests (alphabetically sorted) as:
 
 ## post /users
 
+adds a new user to the database
+
 request body should include:
 
 ```
@@ -34,7 +36,7 @@ request body should include:
 
 ## get /users/:stytchId
 
-passing stytch string id in url
+fetches the user data from the database given their stytch string id
 
 returns user object as:
 
