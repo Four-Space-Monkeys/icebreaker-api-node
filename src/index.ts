@@ -1,8 +1,7 @@
 /* eslint-disable no-console */
-import { PrismaClient } from '@prisma/client';
 import express from 'express';
+import { addUser, getInterests, getUserByStytchId } from '../prisma/functions';
 
-const prisma = new PrismaClient();
 const app = express();
 const port = 8080;
 
@@ -10,11 +9,7 @@ app.use(express.json());
 
 app.get('/interests', async (req, res) => {
   try {
-    const interests = await prisma.interest.findMany({
-      orderBy: {
-        name: 'asc',
-      },
-    });
+    const interests = await getInterests();
     res.status(200).json(interests);
   } catch (err) {
     console.error(err);
@@ -36,17 +31,11 @@ app.post('/users', async (req, res) => {
   } = req.body;
 
   try {
-    await prisma.user.create({
-      data: {
-        firstName,
-        lastName,
-        stytchId,
-        interests: {
-          createMany: {
-            data: interestIds.map((id) => ({ interestId: id })),
-          },
-        },
-      },
+    await addUser({
+      stytchId,
+      firstName,
+      lastName,
+      interestIds,
     });
     res.status(201).end();
   } catch (err) {
@@ -57,31 +46,7 @@ app.post('/users', async (req, res) => {
 
 app.get('/users/:stytchId', async (req, res) => {
   try {
-    const user = await prisma.user.findUnique({
-      where: {
-        stytchId: req.params.stytchId,
-      },
-      select: {
-        id: true,
-        firstName: true,
-        lastName: true,
-        interests: {
-          select: {
-            interest: {
-              select: {
-                id: true,
-                name: true,
-              },
-            },
-          },
-          orderBy: {
-            interest: {
-              name: 'asc',
-            },
-          },
-        },
-      },
-    });
+    const user = await getUserByStytchId(req.params.stytchId);
 
     if (user === null) {
       res.status(404).end();
