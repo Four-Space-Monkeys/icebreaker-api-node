@@ -1,4 +1,5 @@
-import { Prisma, PrismaClient } from '@prisma/client';
+/* eslint-disable no-console */
+import { PrismaClient } from '@prisma/client';
 import express from 'express';
 
 const prisma = new PrismaClient();
@@ -13,9 +14,9 @@ app.get('/interests', async (req, res) => {
       orderBy: {
         name: 'asc',
       },
-    })
+    });
     res.status(200).json(interests);
-  } catch(err) {
+  } catch (err) {
     console.error(err);
     res.status(500).send(err);
   }
@@ -45,10 +46,10 @@ app.post('/users', async (req, res) => {
             data: interestIds.map((id) => ({ interestId: id })),
           },
         },
-      }
+      },
     });
     res.status(201).end();
-  } catch(err) {
+  } catch (err) {
     console.error(err);
     res.status(500).send(err);
   }
@@ -70,7 +71,7 @@ app.get('/users/:stytchId', async (req, res) => {
               select: {
                 id: true,
                 name: true,
-              }
+              },
             },
           },
           orderBy: {
@@ -83,7 +84,7 @@ app.get('/users/:stytchId', async (req, res) => {
     });
 
     if (user === null) {
-      res.status(404).end;
+      res.status(404).end();
       return;
     }
 
@@ -93,7 +94,7 @@ app.get('/users/:stytchId', async (req, res) => {
     };
 
     res.status(200).json(userFormatted);
-  } catch(err) {
+  } catch (err) {
     console.error(err);
     res.status(500).send(err);
   }
