@@ -1,9 +1,10 @@
 # to seed your local database for testing
 
 1. create your .env file [(if you're having trouble setting up the db connection look here)](https://www.prisma.io/docs/getting-started/setup-prisma/start-from-scratch/relational-databases/connect-your-database-typescript-postgres)
-2. ```npx prisma generate```
-3. ```npx prisma migrate dev```
-4. ```npm run dev``` to start the server :)
+2. ```npm install```
+3. ```npx prisma generate```
+4. ```npx prisma migrate dev```
+5. ```npm run dev``` to start the server :)
 
 # endpoints
 
