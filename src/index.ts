@@ -33,7 +33,7 @@ app.post('/users', async (req, res) => {
     firstName: string,
     lastName: string,
     interestIds: number[],
-  } = req.body;
+  } = req.body.data;
 
   try {
     await addUser({
