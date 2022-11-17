@@ -29,13 +29,14 @@ app.post('/users', async (req, res) => {
     lastName,
     interestIds,
   }: {
-    stytchId: string,
-    firstName: string,
-    lastName: string,
-    interestIds: number[],
-  } = req.body.data;
+    stytchId: string;
+    firstName: string;
+    lastName: string;
+    interestIds: number[];
+  } = req.body.userData;
 
   try {
+    console.log(stytchId, firstName, lastName, interestIds);
     await addUser({
       stytchId,
       firstName,
